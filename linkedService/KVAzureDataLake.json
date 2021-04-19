@@ -1,0 +1,18 @@
+{
+	"name": "KVAzureDataLake",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://mydatalakestorge.dfs.core.windows.net",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_kv_datalake",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sec-datalake-key"
+			}
+		}
+	}
+}
