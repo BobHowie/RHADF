@@ -1,0 +1,10 @@
+{
+	"name": "ls_kv_blob",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://KV-DEV-FM.vault.azure.net/"
+		}
+	}
+}
