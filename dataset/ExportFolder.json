@@ -1,0 +1,26 @@
+{
+	"name": "ExportFolder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBloboutput",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@CONCAT(formatDateTime(convertFromUtc(utcnow(),'Eastern Standard Time'),'yyyy'),'-',formatDateTime(convertFromUtc(utcnow(),'Eastern Standard Time'),'MM'),'-',formatDateTime(convertFromUtc(utcnow(),'Eastern Standard Time'),'dd'))",
+					"type": "Expression"
+				},
+				"container": "export"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

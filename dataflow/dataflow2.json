@@ -1,0 +1,32 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Xml1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "outputCSV",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Flatten1"
+				}
+			],
+			"script": "source(output(\n\t\t{urn:Test.Namespace,Root} as ({urn:Test.Namespace,catalog} as ({urn:Test.Namespace,book} as ({@id} as string, {urn:Test.Namespace,author} as string, {urn:Test.Namespace,genre} as string, {urn:Test.Namespace,price} as double, {urn:Test.Namespace,publish_date} as date, {urn:Test.Namespace,title} as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tvalidationMode: 'xsd',\n\tnamespaces: true) ~> source1\nsource1 foldDown(unroll({urn:Test.Namespace,Root}.{urn:Test.Namespace,catalog}.{urn:Test.Namespace,book}),\n\tmapColumn(\n\t\t{@id} = {urn:Test.Namespace,Root}.{urn:Test.Namespace,catalog}.{urn:Test.Namespace,book}.{@id},\n\t\tauthor = {urn:Test.Namespace,Root}.{urn:Test.Namespace,catalog}.{urn:Test.Namespace,book}.{urn:Test.Namespace,author},\n\t\tgenre = {urn:Test.Namespace,Root}.{urn:Test.Namespace,catalog}.{urn:Test.Namespace,book}.{urn:Test.Namespace,genre},\n\t\tprice = {urn:Test.Namespace,Root}.{urn:Test.Namespace,catalog}.{urn:Test.Namespace,book}.{urn:Test.Namespace,price},\n\t\tpublish_date = {urn:Test.Namespace,Root}.{urn:Test.Namespace,catalog}.{urn:Test.Namespace,book}.{urn:Test.Namespace,publish_date},\n\t\ttitle = {urn:Test.Namespace,Root}.{urn:Test.Namespace,catalog}.{urn:Test.Namespace,book}.{urn:Test.Namespace,title}\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(input(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string,\n\t\tColumn_8 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['xmlcsv.txt'],\n\tmapColumn(\n\t\t{@id},\n\t\tauthor,\n\t\tgenre,\n\t\tprice,\n\t\tpublish_date,\n\t\ttitle\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"name": "dataflow4",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Json4",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "sinkCSV"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FlattenTopping"
+				},
+				{
+					"name": "FlattenBatters"
+				}
+			],
+			"script": "source(output(\n\t\tid as string,\n\t\ttype as string,\n\t\tname as string,\n\t\tppu as double,\n\t\tbatters as (batter as (id as string, type as string)[]),\n\t\ttopping as (id as string, type as string)[]\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'singleDocument') ~> source1\nsource1 foldDown(unroll(topping),\n\tmapColumn(\n\t\tid,\n\t\tname,\n\t\ttype,\n\t\tppu,\n\t\ttopping_id = topping.id,\n\t\ttopping_type = topping.type,\n\t\tbatter = batters\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FlattenTopping\nFlattenTopping foldDown(unroll(batter.batter, batter.batter),\n\tmapColumn(\n\t\tid,\n\t\tname,\n\t\ttype,\n\t\tppu,\n\t\ttopping_id,\n\t\ttopping_type,\n\t\tbatter_id = batter.batter.id,\n\t\tbatter_type = batter.batter.type\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FlattenBatters\nFlattenBatters sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['PizzerTest.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkCSV"
+		}
+	}
+}

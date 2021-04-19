@@ -1,0 +1,9 @@
+{
+	"name": "mydtfactoryfm",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e065a4ff-6c7a-47e3-8cb0-e248f51e22fb",
+		"tenantId": "5e699962-f343-4f57-a5f0-1ba0352ab4e7"
+	}
+}
