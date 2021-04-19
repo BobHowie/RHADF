@@ -1,0 +1,11 @@
+{
+	"name": "ls_kv_datalake",
+	"properties": {
+		"description": "linked services for data lake",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://KV-DEV-FM.vault.azure.net/"
+		}
+	}
+}
