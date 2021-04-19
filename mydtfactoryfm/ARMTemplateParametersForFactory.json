@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "mydtfactoryfm"
+		},
+		"AzureBlobArchive_connectionString": {
+			"value": ""
+		},
+		"AzureBlobInput_connectionString": {
+			"value": ""
+		},
+		"AzureBlobJason_connectionString": {
+			"value": ""
+		},
+		"AzureBlobXML_connectionString": {
+			"value": ""
+		},
+		"AzureBloboutput_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://mydatalakestorge.dfs.core.windows.net"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://mydatalakestorge.dfs.core.windows.net"
+		},
+		"AzureDataLakeStore1_properties_typeProperties_dataLakeStoreUri": {
+			"value": "https://mydatalakefm.azuredatalakestore.net/webhdfs/v1"
+		},
+		"AzureDataLakeStore1_properties_typeProperties_tenant": {
+			"value": "5e699962-f343-4f57-a5f0-1ba0352ab4e7"
+		},
+		"AzureDataLakeStore1_properties_typeProperties_subscriptionId": {
+			"value": "05181e0a-7005-4a80-a48e-f4855c29a444"
+		},
+		"AzureDataLakeStore1_properties_typeProperties_resourceGroupName": {
+			"value": "MyResource1"
+		}
+	}
+}
