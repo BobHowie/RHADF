@@ -1,0 +1,24 @@
+{
+	"name": "dataflow7",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "outputCSV",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "Rank1"
+				}
+			],
+			"script": "source(output(\n\t\tTV as double,\n\t\tRadio as double,\n\t\tNewspaper as double,\n\t\tSales as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 rank(desc(Sales, true),\n\toutput(Ranking as long)) ~> Rank1"
+		}
+	}
+}
